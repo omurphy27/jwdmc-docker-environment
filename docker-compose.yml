@@ -1,0 +1,29 @@
+version: '2'
+services:
+  php:
+    image: omurphy/jwdmc
+    volumes:
+     - ./application:/var/www/html
+    ports:
+      - "8080:80"
+    networks:
+     - appnet
+  db:
+    image: mysql:5.5
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: homestead
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+    volumes:
+     - data:/var/lib/mysql
+    networks:
+     - appnet
+networks:
+  appnet:
+    driver: "bridge"
+volumes:
+  data:
+    driver: "local"

@@ -34,6 +34,11 @@ You will need to change the permissions of the mysql user that we created in our
 docker exec -i ##ContainerID## mysql -uhomestead -psecret homestead < db-to-import.sql
 ```
 
+**NOTE:** If you receive the following error when doing the above import, `Unknown collation: 'utf8mb4_unicode_520_ci'`, then you will need to alter your .sql file as described below.
+
+  * In your sql file, find and replace all occurrences of `utf8mb4_unicode_520_ci` with `utf8mb4_unicode_ci` 
+  * Save the file and retry the import. More details on the error available from [here](https://stackoverflow.com/questions/42385099/1273-unknown-collation-utf8mb4-unicode-520-ci)
+
 ### Exporting a database
 ```
 docker exec -i ##ContainerID## mysqldump -psecret -uhomestead homestead > db-exported.sql
@@ -41,4 +46,3 @@ docker exec -i ##ContainerID## mysqldump -psecret -uhomestead homestead > db-exp
 
 #### Note on importing and exporting
 **It is insecure to expose the mysql user password on the command line**, but it's not an issue here since this is only meant for local development. See more info about connecting to mysql without using a password on the command line from [here](https://stackoverflow.com/questions/9293042/how-to-perform-a-mysqldump-without-a-password-prompt) which is important for production.
-
